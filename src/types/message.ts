@@ -17,21 +17,41 @@ export interface Reaction {
   }[];
 }
 
+export interface Sender {
+  id: string;
+  name: string;
+  avatar?: string;
+}
+
+export interface FileAttachment {
+  id: string;
+  name: string;
+  size: string;
+  type: 'image' | 'document' | 'pdf' | 'other';
+  url?: string;
+}
+
 export interface Message {
   id: string;
-  content: string;
-  createdAt: string;
-  updatedAt?: string;
-  sender: {
-    id: string;
-    name: string;
-    avatar?: string;
-    role: 'client' | 'agency';
-  };
-  attachments: Attachment[];
-  reactions: Reaction[];
-  read: boolean;
-  threadId: string;
+  projectId: string;
+  text: string;
+  sender: Sender;
+  timestamp: string;
+  unread?: boolean;
+  reactions?: number;
+  topic?: string;
+  attachments?: FileAttachment[];
+  replies?: Message[];
+  parentId?: string;
+}
+
+export interface MessageThread {
+  id: string;
+  projectId: string;
+  topic: string;
+  lastUpdated: string;
+  messages: Message[];
+  unreadCount?: number;
 }
 
 export interface Thread {

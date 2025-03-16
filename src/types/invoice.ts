@@ -16,6 +16,8 @@ export interface Payment {
   reference?: string;
 }
 
+export type InvoiceStatus = 'draft' | 'sent' | 'paid' | 'partially_paid' | 'overdue';
+
 export interface Invoice {
   id: string;
   invoiceNumber: string;
@@ -56,7 +58,7 @@ export interface Invoice {
   total: number;
   amountPaid: number;
   amountDue: number;
-  status: 'draft' | 'sent' | 'paid' | 'partially_paid' | 'overdue';
+  status: InvoiceStatus;
   notes?: string;
   terms?: string;
   payments: Payment[];

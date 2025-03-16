@@ -1,9 +1,9 @@
 export interface Document {
   id: string;
   title: string;
-  description?: string;
-  type: 'pdf' | 'doc' | 'sheet' | 'image' | 'other';
-  status: 'draft' | 'pending_approval' | 'approved' | 'rejected';
+  description: string;
+  type: 'contract' | 'proposal' | 'invoice' | 'design' | 'other';
+  status: 'draft' | 'pending_approval' | 'approved' | 'changes_requested';
   url: string;
   thumbnailUrl?: string;
   size: number;
@@ -12,8 +12,8 @@ export interface Document {
   createdBy: {
     id: string;
     name: string;
-    avatar?: string;
-    role: 'client' | 'agency';
+    avatar: string;
+    role: string;
   };
   projectId: string;
   category?: string;
@@ -32,8 +32,8 @@ export interface Document {
     createdBy: {
       id: string;
       name: string;
-      avatar?: string;
-      role: 'client' | 'agency';
+      avatar: string;
+      role: string;
     };
   }[];
 } 

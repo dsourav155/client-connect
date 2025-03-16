@@ -1,378 +1,262 @@
-import { Thread, Message } from '@/types/message';
-import { v4 as uuidv4 } from 'uuid';
+import { Conversation, Message } from '../types/message';
 
-export const threads: Thread[] = [
-  {
-    id: '1',
-    title: 'Homepage Design Feedback',
-    projectId: '1',
-    createdAt: '2023-08-25T10:00:00Z',
-    updatedAt: '2023-08-29T14:30:00Z',
-    participants: [
-      {
-        id: '101',
-        name: 'John Smith',
-        avatar: '/avatars/john.jpg',
-        role: 'agency',
-      },
-      {
-        id: '201',
-        name: 'Jane Doe',
-        role: 'client',
-        avatar: '/avatars/jane.jpg',
-      },
-    ],
-    messages: [
-      {
-        id: 'm1',
-        content: 'Hi Jane, I\'ve uploaded the latest homepage designs for your review. Could you please take a look and provide feedback by tomorrow?',
-        createdAt: '2023-08-25T10:00:00Z',
-        sender: {
-          id: '101',
-          name: 'John Smith',
-          avatar: '/avatars/john.jpg',
-          role: 'agency',
-        },
-        attachments: [
-          {
-            id: 'a1',
-            name: 'homepage-v2.pdf',
-            type: 'pdf',
-            size: 2457600,
-            url: '/documents/homepage-v2.pdf',
-            thumbnailUrl: '/documents/homepage-v2-thumb.jpg',
-            uploadedAt: '2023-08-25T09:58:00Z',
-          },
-        ],
-        reactions: [],
-        read: true,
-        threadId: '1',
-      },
-      {
-        id: 'm2',
-        content: 'I\'ll take a look today and get back to you with my thoughts. Are there any specific areas you want me to focus on?',
-        createdAt: '2023-08-25T13:45:00Z',
-        sender: {
-          id: '201',
-          name: 'Jane Doe',
-          avatar: '/avatars/jane.jpg',
-          role: 'client',
-        },
-        attachments: [],
-        reactions: [
-          {
-            type: '👍',
-            count: 1,
-            users: [
-              {
-                id: '101',
-                name: 'John Smith',
-              },
-            ],
-          },
-        ],
-        read: true,
-        threadId: '1',
-      },
-      {
-        id: 'm3',
-        content: 'The main areas to focus on would be the hero section and the product showcase. We made significant changes there based on our last discussion.',
-        createdAt: '2023-08-25T14:20:00Z',
-        sender: {
-          id: '101',
-          name: 'John Smith',
-          avatar: '/avatars/john.jpg',
-          role: 'agency',
-        },
-        attachments: [],
-        reactions: [],
-        read: true,
-        threadId: '1',
-      },
-      {
-        id: 'm4',
-        content: 'I\'ve reviewed the designs and I really like the direction. The hero section is much stronger now. I have a few suggestions for the product showcase though - could we make the images larger and reduce the text?',
-        createdAt: '2023-08-26T09:10:00Z',
-        sender: {
-          id: '201',
-          name: 'Jane Doe',
-          avatar: '/avatars/jane.jpg',
-          role: 'client',
-        },
-        attachments: [
-          {
-            id: 'a2',
-            name: 'feedback-sketch.jpg',
-            type: 'image',
-            size: 1245000,
-            url: '/documents/feedback-sketch.jpg',
-            thumbnailUrl: '/documents/feedback-sketch-thumb.jpg',
-            uploadedAt: '2023-08-26T09:08:00Z',
-          },
-        ],
-        reactions: [
-          {
-            type: '❤️',
-            count: 1,
-            users: [
-              {
-                id: '101',
-                name: 'John Smith',
-              },
-            ],
-          },
-        ],
-        read: true,
-        threadId: '1',
-      },
-      {
-        id: 'm5',
-        content: 'Those are great suggestions. I\'ll work on the revisions and have a new version for you by tomorrow.',
-        createdAt: '2023-08-26T10:30:00Z',
-        sender: {
-          id: '101',
-          name: 'John Smith',
-          avatar: '/avatars/john.jpg',
-          role: 'agency',
-        },
-        attachments: [],
-        reactions: [],
-        read: true,
-        threadId: '1',
-      },
-      {
-        id: 'm6',
-        content: 'Here\'s the revised version with larger product images and less text as requested. Let me know what you think!',
-        createdAt: '2023-08-29T14:30:00Z',
-        sender: {
-          id: '101',
-          name: 'John Smith',
-          avatar: '/avatars/john.jpg',
-          role: 'agency',
-        },
-        attachments: [
-          {
-            id: 'a3',
-            name: 'homepage-v3.pdf',
-            type: 'pdf',
-            size: 2845000,
-            url: '/documents/homepage-v3.pdf',
-            thumbnailUrl: '/documents/homepage-v3-thumb.jpg',
-            uploadedAt: '2023-08-29T14:28:00Z',
-          },
-        ],
-        reactions: [],
-        read: false,
-        threadId: '1',
-      },
-    ],
-    unreadCount: 1,
-    lastMessage: {
-      id: 'm6',
-      content: 'Here\'s the revised version with larger product images and less text as requested. Let me know what you think!',
-      createdAt: '2023-08-29T14:30:00Z',
-      sender: {
-        id: '101',
-        name: 'John Smith',
-        avatar: '/avatars/john.jpg',
-        role: 'agency',
-      },
-      attachments: [
+export const mockMessages = {
+  conversations: [
+    {
+      id: '1',
+      title: 'Homepage Design Feedback',
+      participants: [
         {
-          id: 'a3',
-          name: 'homepage-v3.pdf',
-          type: 'pdf',
-          size: 2845000,
-          url: '/documents/homepage-v3.pdf',
-          thumbnailUrl: '/documents/homepage-v3-thumb.jpg',
-          uploadedAt: '2023-08-29T14:28:00Z',
+          id: '101',
+          name: 'John Smith',
+          avatar: '/avatars/john.jpg',
+          type: 'agency' as const
         },
+        {
+          id: '201',
+          name: 'Jane Doe',
+          avatar: '/avatars/jane.jpg',
+          type: 'client' as const
+        }
       ],
-      reactions: [],
-      read: false,
-      threadId: '1',
+      lastMessage: {
+        content: 'I think we should adjust the hero section to better match your brand guidelines.',
+        timestamp: '2023-08-29T14:30:00Z'
+      },
+      unreadCount: 2
     },
-  },
-  {
-    id: '2',
-    title: 'Project Timeline Update',
-    projectId: '1',
-    createdAt: '2023-08-20T09:00:00Z',
-    updatedAt: '2023-08-28T16:15:00Z',
-    participants: [
-      {
-        id: '102',
-        name: 'Sarah Johnson',
-        avatar: '/avatars/sarah.jpg',
-        role: 'agency',
-      },
-      {
-        id: '201',
-        name: 'Jane Doe',
-        avatar: '/avatars/jane.jpg',
-        role: 'client',
-      },
-      {
-        id: '202',
-        name: 'Robert Brown',
-        avatar: '/avatars/robert.jpg',
-        role: 'client',
-      },
-    ],
-    messages: [
-      {
-        id: 'm7',
-        content: 'Hello everyone, I wanted to discuss a potential adjustment to our project timeline. We may need to extend the design phase by one week due to some additional requirements.',
-        createdAt: '2023-08-20T09:00:00Z',
-        sender: {
+    {
+      id: '2',
+      title: 'Logo Revision Request',
+      participants: [
+        {
           id: '102',
-          name: 'Sarah Johnson',
-          avatar: '/avatars/sarah.jpg',
-          role: 'agency',
+          name: 'Michael Brown',
+          avatar: '/avatars/michael.jpg',
+          type: 'agency' as const
         },
-        attachments: [
-          {
-            id: 'a4',
-            name: 'revised-timeline.xlsx',
-            type: 'sheet',
-            size: 1560000,
-            url: '/documents/revised-timeline.xlsx',
-            uploadedAt: '2023-08-20T08:58:00Z',
-          },
-        ],
-        reactions: [],
-        read: true,
-        threadId: '2',
-      },
-      {
-        id: 'm8',
-        content: 'I understand the need for extension, but how will this affect our launch date? We have marketing campaigns scheduled.',
-        createdAt: '2023-08-20T10:30:00Z',
-        sender: {
-          id: '202',
-          name: 'Robert Brown',
-          avatar: '/avatars/robert.jpg',
-          role: 'client',
-        },
-        attachments: [],
-        reactions: [],
-        read: true,
-        threadId: '2',
-      },
-      {
-        id: 'm9',
-        content: 'We can still maintain the same launch date by slightly condensing the testing phase. I\'ve outlined the adjusted schedule in the attached file.',
-        createdAt: '2023-08-20T11:15:00Z',
-        sender: {
-          id: '102',
-          name: 'Sarah Johnson',
-          avatar: '/avatars/sarah.jpg',
-          role: 'agency',
-        },
-        attachments: [],
-        reactions: [
-          {
-            type: '👍',
-            count: 2,
-            users: [
-              {
-                id: '201',
-                name: 'Jane Doe',
-              },
-              {
-                id: '202',
-                name: 'Robert Brown',
-              },
-            ],
-          },
-        ],
-        read: true,
-        threadId: '2',
-      },
-      {
-        id: 'm10',
-        content: 'That works for us. Thank you for accommodating the launch date.',
-        createdAt: '2023-08-20T11:45:00Z',
-        sender: {
+        {
           id: '201',
           name: 'Jane Doe',
           avatar: '/avatars/jane.jpg',
-          role: 'client',
-        },
-        attachments: [],
-        reactions: [],
-        read: true,
-        threadId: '2',
-      },
-      {
-        id: 'm11',
-        content: 'Update: We\'ve completed the additional design requirements ahead of schedule. We might be able to get back to the original timeline. I\'ll confirm by end of week.',
-        createdAt: '2023-08-28T16:15:00Z',
-        sender: {
-          id: '102',
-          name: 'Sarah Johnson',
-          avatar: '/avatars/sarah.jpg',
-          role: 'agency',
-        },
-        attachments: [],
-        reactions: [
-          {
-            type: '🎉',
-            count: 2,
-            users: [
-              {
-                id: '201',
-                name: 'Jane Doe',
-              },
-              {
-                id: '202',
-                name: 'Robert Brown',
-              },
-            ],
-          },
-        ],
-        read: true,
-        threadId: '2',
-      },
-    ],
-    unreadCount: 0,
-    lastMessage: {
-      id: 'm11',
-      content: 'Update: We\'ve completed the additional design requirements ahead of schedule. We might be able to get back to the original timeline. I\'ll confirm by end of week.',
-      createdAt: '2023-08-28T16:15:00Z',
-      sender: {
-        id: '102',
-        name: 'Sarah Johnson',
-        avatar: '/avatars/sarah.jpg',
-        role: 'agency',
-      },
-      attachments: [],
-      reactions: [
-        {
-          type: '🎉',
-          count: 2,
-          users: [
-            {
-              id: '201',
-              name: 'Jane Doe',
-            },
-            {
-              id: '202',
-              name: 'Robert Brown',
-            },
-          ],
-        },
+          type: 'client' as const
+        }
       ],
+      lastMessage: {
+        content: 'We need to make the logo a bit more vibrant. Can we try some different color options?',
+        timestamp: '2023-08-28T11:15:00Z'
+      },
+      unreadCount: 0
+    },
+    {
+      id: '3',
+      title: 'Content Strategy Discussion',
+      participants: [
+        {
+          id: '103',
+          name: 'Sarah Wilson',
+          avatar: '/avatars/sarah.jpg',
+          type: 'agency' as const
+        },
+        {
+          id: '201',
+          name: 'Jane Doe',
+          avatar: '/avatars/jane.jpg',
+          type: 'client' as const
+        }
+      ],
+      lastMessage: {
+        content: 'Let\'s schedule a call to discuss the blog content strategy for next quarter.',
+        timestamp: '2023-08-25T09:45:00Z'
+      },
+      unreadCount: 1
+    }
+  ],
+  messages: [
+    // Conversation 1: Homepage Design Feedback
+    {
+      id: 'm1',
+      conversationId: '1',
+      sender: {
+        id: '101',
+        name: 'John Smith',
+        avatar: '/avatars/john.jpg',
+        type: 'agency' as const
+      },
+      content: 'Hi Jane, I\'ve uploaded the latest homepage designs for your review. Could you please take a look and provide feedback by tomorrow?',
+      timestamp: '2023-08-25T10:00:00Z',
       read: true,
-      threadId: '2',
+      attachments: ['homepage-v2.pdf'],
+      reactions: []
     },
-  },
-];
-
-export const getThread = (id: string): Thread | undefined => {
-  return threads.find(thread => thread.id === id);
-};
-
-export const getThreadsByProject = (projectId: string): Thread[] => {
-  return threads.filter(thread => thread.projectId === projectId);
+    {
+      id: 'm2',
+      conversationId: '1',
+      sender: {
+        id: '201',
+        name: 'Jane Doe',
+        avatar: '/avatars/jane.jpg',
+        type: 'client' as const
+      },
+      content: 'Thanks John! I\'ll review it this afternoon and get back to you.',
+      timestamp: '2023-08-25T10:15:00Z',
+      read: true,
+      attachments: [],
+      reactions: [{ emoji: '👍', user: '101' }]
+    },
+    {
+      id: 'm3',
+      conversationId: '1',
+      sender: {
+        id: '201',
+        name: 'Jane Doe',
+        avatar: '/avatars/jane.jpg',
+        type: 'client' as const
+      },
+      content: 'I just went through the designs and they look great overall! But I think we should adjust the hero section to better match our brand guidelines.',
+      timestamp: '2023-08-25T15:30:00Z',
+      read: true,
+      attachments: [],
+      reactions: []
+    },
+    {
+      id: 'm4',
+      conversationId: '1',
+      sender: {
+        id: '101',
+        name: 'John Smith',
+        avatar: '/avatars/john.jpg',
+        type: 'agency' as const
+      },
+      content: 'That makes sense. I\'ll work on some revisions to the hero section and get those to you by tomorrow morning.',
+      timestamp: '2023-08-25T16:00:00Z',
+      read: true,
+      attachments: [],
+      reactions: []
+    },
+    {
+      id: 'm5',
+      conversationId: '1',
+      sender: {
+        id: '101',
+        name: 'John Smith',
+        avatar: '/avatars/john.jpg',
+        type: 'agency' as const
+      },
+      content: 'Hi Jane, I\'ve updated the hero section based on your feedback. Let me know what you think!',
+      timestamp: '2023-08-29T09:30:00Z',
+      read: false,
+      attachments: ['homepage-v3.pdf'],
+      reactions: []
+    },
+    {
+      id: 'm6',
+      conversationId: '1',
+      sender: {
+        id: '101',
+        name: 'John Smith',
+        avatar: '/avatars/john.jpg',
+        type: 'agency' as const
+      },
+      content: 'Also included a variation that uses your secondary brand color as well.',
+      timestamp: '2023-08-29T14:30:00Z',
+      read: false,
+      attachments: ['homepage-v3-alt.pdf'],
+      reactions: []
+    },
+    
+    // Conversation 2: Logo Revision Request
+    {
+      id: 'm7',
+      conversationId: '2',
+      sender: {
+        id: '201',
+        name: 'Jane Doe',
+        avatar: '/avatars/jane.jpg',
+        type: 'client' as const
+      },
+      content: 'Hi Michael, I\'ve been thinking about our logo and I feel it\'s not quite there yet.',
+      timestamp: '2023-08-26T14:20:00Z',
+      read: true,
+      attachments: [],
+      reactions: []
+    },
+    {
+      id: 'm8',
+      conversationId: '2',
+      sender: {
+        id: '102',
+        name: 'Michael Brown',
+        avatar: '/avatars/michael.jpg',
+        type: 'agency' as const
+      },
+      content: 'I understand, Jane. What aspects would you like to revisit?',
+      timestamp: '2023-08-26T14:45:00Z',
+      read: true,
+      attachments: [],
+      reactions: []
+    },
+    {
+      id: 'm9',
+      conversationId: '2',
+      sender: {
+        id: '201',
+        name: 'Jane Doe',
+        avatar: '/avatars/jane.jpg',
+        type: 'client' as const
+      },
+      content: 'We need to make the logo a bit more vibrant. Can we try some different color options?',
+      timestamp: '2023-08-28T11:15:00Z',
+      read: true,
+      attachments: [],
+      reactions: [{ emoji: '👍', user: '102' }]
+    },
+    
+    // Conversation 3: Content Strategy Discussion
+    {
+      id: 'm10',
+      conversationId: '3',
+      sender: {
+        id: '103',
+        name: 'Sarah Wilson',
+        avatar: '/avatars/sarah.jpg',
+        type: 'agency' as const
+      },
+      content: 'Hi Jane, I wanted to touch base about your content strategy for the next quarter.',
+      timestamp: '2023-08-25T09:00:00Z',
+      read: true,
+      attachments: [],
+      reactions: []
+    },
+    {
+      id: 'm11',
+      conversationId: '3',
+      sender: {
+        id: '201',
+        name: 'Jane Doe',
+        avatar: '/avatars/jane.jpg',
+        type: 'client' as const
+      },
+      content: 'Hi Sarah, that sounds good. I\'ve been thinking about focusing more on case studies.',
+      timestamp: '2023-08-25T09:30:00Z',
+      read: true,
+      attachments: [],
+      reactions: []
+    },
+    {
+      id: 'm12',
+      conversationId: '3',
+      sender: {
+        id: '103',
+        name: 'Sarah Wilson',
+        avatar: '/avatars/sarah.jpg',
+        type: 'agency' as const
+      },
+      content: 'Let\'s schedule a call to discuss the blog content strategy for next quarter.',
+      timestamp: '2023-08-25T09:45:00Z',
+      read: false,
+      attachments: [],
+      reactions: []
+    }
+  ]
 }; 

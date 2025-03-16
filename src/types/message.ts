@@ -8,30 +8,38 @@ export interface Attachment {
   uploadedAt: string;
 }
 
+export interface Sender {
+  id: string;
+  name: string;
+  avatar?: string;
+  type: 'client' | 'agency';
+}
+
 export interface Reaction {
-  type: '👍' | '👎' | '❤️' | '😄' | '😮' | '😢' | '🎉';
-  count: number;
-  users: {
-    id: string;
-    name: string;
-  }[];
+  emoji: string;
+  user: string;
 }
 
 export interface Message {
   id: string;
+  conversationId: string;
   content: string;
-  createdAt: string;
-  updatedAt?: string;
-  sender: {
-    id: string;
-    name: string;
-    avatar?: string;
-    role: 'client' | 'agency';
-  };
-  attachments: Attachment[];
-  reactions: Reaction[];
+  timestamp: string;
+  sender: Sender;
   read: boolean;
-  threadId: string;
+  attachments: string[];
+  reactions: Reaction[];
+}
+
+export interface Conversation {
+  id: string;
+  title: string;
+  participants: Sender[];
+  lastMessage: {
+    content: string;
+    timestamp: string;
+  };
+  unreadCount: number;
 }
 
 export interface Thread {
